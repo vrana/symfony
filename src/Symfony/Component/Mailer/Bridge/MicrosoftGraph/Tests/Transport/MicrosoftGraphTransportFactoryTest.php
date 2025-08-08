@@ -84,7 +84,7 @@ class MicrosoftGraphTransportFactoryTest extends AbstractTransportFactoryTestCas
         $dsn = new Dsn('microsoftgraph+api', $graph, self::USER, self::PASSWORD, null, ['tenantId' => self::TENANT, 'authEndpoint' => $auth]);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage($failingType.' endpoint needs to be provided without http(s)://.');
+        $this->expectExceptionMessage($failingType.' endpoint needs to be provided without "http(s)://".');
         $factory->create($dsn);
     }
 
