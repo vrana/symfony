@@ -59,6 +59,11 @@ HttpKernel
  * Deprecate implementing `__sleep/wakeup()` on data collectors; use `__(un)serialize()` instead
  * Make `Profile` final and `Profiler::__sleep()` internal
 
+Mime
+----
+
+ * Deprecate implementing `__sleep/wakeup()` on `AbstractPart` implementations; use `__(un)serialize()` instead
+
 Security
 --------
 
