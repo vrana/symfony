@@ -71,6 +71,11 @@ Serializer
 
  * Make `AttributeMetadata` and `ClassMetadata` final
 
+String
+------
+
+ * Deprecate implementing `__sleep/wakeup()` on string implementations
+
 Translation
 -----------
 
