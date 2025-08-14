@@ -84,6 +84,7 @@ Translation
 Validator
 ---------
 
+ * Deprecate implementing `__sleep/wakeup()` on `GenericMetadata` implementations; use `__(un)serialize()` instead
  * Deprecate passing a list of choices to the first argument of the `Choice` constraint. Use the `choices` option instead
  * Deprecate `getRequiredOptions()` and `getDefaultOption()` methods of the `All`, `AtLeastOneOf`, `CardScheme`, `Collection`,
    `CssColor`, `Expression`, `Regex`, `Sequentially`, `Type`, and `When` constraints
