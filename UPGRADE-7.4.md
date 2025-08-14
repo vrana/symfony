@@ -52,6 +52,13 @@ HttpFoundation
 
  * Deprecate using `Request::sendHeaders()` after headers have already been sent; use a `StreamedResponse` instead
 
+HttpKernel
+----------
+
+ * Deprecate implementing `__sleep/wakeup()` on kernels; use `__(un)serialize()` instead
+ * Deprecate implementing `__sleep/wakeup()` on data collectors; use `__(un)serialize()` instead
+ * Make `Profile` final and `Profiler::__sleep()` internal
+
 Security
 --------
 
