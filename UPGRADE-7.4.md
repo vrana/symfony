@@ -59,6 +59,11 @@ Security
  * Deprecate `AbstractListener::__invoke`
  * Deprecate `LazyFirewallContext::__invoke()`
 
+Serializer
+----------
+
+ * Make `AttributeMetadata` and `ClassMetadata` final
+
 Translation
 -----------
 
