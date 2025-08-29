@@ -7,6 +7,28 @@ in 6.4 minor versions.
 To get the diff for a specific change, go to https://github.com/symfony/symfony/commit/XXX where XXX is the change hash
 To get the diff between two versions, go to https://github.com/symfony/symfony/compare/v6.4.0...v6.4.1
 
+* 6.4.25 (2025-08-29)
+
+ * bug #61520 [Yaml] Fix scope resolution operator in flow mapping keys (MatTheCat)
+ * bug #61534 [HttpClient] Fix PHP 8.5 deprecation using str_increment() (nicolas-grekas)
+ * bug #61529 [FrameworkBundle] Don’t collect CLI profiles if the profiler is disabled (MatTheCat)
+ * bug #61501 [Console] Fix testing multiline question (MatTheCat)
+ * bug #61503 [String] Fix nodes singular (ruudk)
+ * feature #61486 [Security] Ignore target route when exiting impersonation (MatTheCat)
+ * bug #61459 [String] Fix issues singular (ruudk)
+ * bug #61426 [Intl] Take timezoneTypes’ ianaMap into account (MatTheCat)
+ * bug #61453 [VarExporter] Fix serializing classes with __serialize() returning unprefixed private properties (nicolas-grekas)
+ * bug #61447 [String] specific fix to avoid 'outag' when inflecting 'outages' (PhilETaylor)
+ * bug #61115 [FrameworkBundle] Make `cache:warmup` warm up read-only caches (MatTheCat)
+ * bug #61401 [Process] Enhance hasSystemCallBeenInterrupted function for non-english locale (christianseel)
+ * bug #61405  Remove calls to no-op functions, deprecated in PHP 8.5 (nicolas-grekas)
+ * bug #61402  Remove calls to deprecated methods of SplObjectStorage (nicolas-grekas)
+ * bug #61355 [WebProfilerBundle] Fix toolbar not rendering after replacing it (aleho)
+ * bug #58547 [HtmlSanitizer] Fix `force_attributes` not replacing existing attribute in initial data (tgalopin)
+ * bug #61291 [Messenger] Remove fix `NoAutoAckStamp` handling in `Worker::flush()` (wazum)
+ * bug #61304 [PhpUnitBridge] Call Reflection*::setAccessible() only for PHP < 8.1 (W0rma)
+ * bug #61319 [Console] [Table] Don't split grapheme clusters (schlndh)
+
 * 6.4.24 (2025-07-31)
 
  * bug #61276 [DependencyInjection] Escape parameters before resolving env placeholders (MatTheCat)
