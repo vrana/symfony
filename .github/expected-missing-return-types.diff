@@ -2328,21 +2328,21 @@ diff --git a/src/Symfony/Component/Console/EventListener/ErrorListener.php b/src
 diff --git a/src/Symfony/Component/Console/Formatter/OutputFormatter.php b/src/Symfony/Component/Console/Formatter/OutputFormatter.php
 --- a/src/Symfony/Component/Console/Formatter/OutputFormatter.php
 +++ b/src/Symfony/Component/Console/Formatter/OutputFormatter.php
-@@ -87,5 +87,5 @@ class OutputFormatter implements WrappableOutputFormatterInterface
+@@ -88,5 +88,5 @@ class OutputFormatter implements WrappableOutputFormatterInterface
       * @return void
       */
 -    public function setDecorated(bool $decorated)
 +    public function setDecorated(bool $decorated): void
      {
          $this->decorated = $decorated;
-@@ -100,5 +100,5 @@ class OutputFormatter implements WrappableOutputFormatterInterface
+@@ -101,5 +101,5 @@ class OutputFormatter implements WrappableOutputFormatterInterface
       * @return void
       */
 -    public function setStyle(string $name, OutputFormatterStyleInterface $style)
 +    public function setStyle(string $name, OutputFormatterStyleInterface $style): void
      {
          $this->styles[strtolower($name)] = $style;
-@@ -127,5 +127,5 @@ class OutputFormatter implements WrappableOutputFormatterInterface
+@@ -128,5 +128,5 @@ class OutputFormatter implements WrappableOutputFormatterInterface
       * @return string
       */
 -    public function formatAndWrap(?string $message, int $width)
@@ -2488,21 +2488,21 @@ diff --git a/src/Symfony/Component/Console/Helper/Helper.php b/src/Symfony/Compo
 +    public function setHelperSet(?HelperSet $helperSet = null): void
      {
          if (1 > \func_num_args()) {
-@@ -97,5 +97,5 @@ abstract class Helper implements HelperInterface
+@@ -101,5 +101,5 @@ abstract class Helper implements HelperInterface
       * @return string
       */
 -    public static function formatTime(int|float $secs, int $precision = 1)
 +    public static function formatTime(int|float $secs, int $precision = 1): string
      {
          $secs = (int) floor($secs);
-@@ -140,5 +140,5 @@ abstract class Helper implements HelperInterface
+@@ -144,5 +144,5 @@ abstract class Helper implements HelperInterface
       * @return string
       */
 -    public static function formatMemory(int $memory)
 +    public static function formatMemory(int $memory): string
      {
          if ($memory >= 1024 * 1024 * 1024) {
-@@ -160,5 +160,5 @@ abstract class Helper implements HelperInterface
+@@ -164,5 +164,5 @@ abstract class Helper implements HelperInterface
       * @return string
       */
 -    public static function removeDecoration(OutputFormatterInterface $formatter, ?string $string)
@@ -8905,24 +8905,6 @@ diff --git a/src/Symfony/Component/HttpKernel/TerminableInterface.php b/src/Symf
 -    public function terminate(Request $request, Response $response);
 +    public function terminate(Request $request, Response $response): void;
  }
-diff --git a/src/Symfony/Component/Intl/Data/Bundle/Compiler/BundleCompilerInterface.php b/src/Symfony/Component/Intl/Data/Bundle/Compiler/BundleCompilerInterface.php
---- a/src/Symfony/Component/Intl/Data/Bundle/Compiler/BundleCompilerInterface.php
-+++ b/src/Symfony/Component/Intl/Data/Bundle/Compiler/BundleCompilerInterface.php
-@@ -27,4 +27,4 @@ interface BundleCompilerInterface
-      * @return void
-      */
--    public function compile(string $sourcePath, string $targetDir);
-+    public function compile(string $sourcePath, string $targetDir): void;
- }
-diff --git a/src/Symfony/Component/Intl/Data/Bundle/Writer/BundleWriterInterface.php b/src/Symfony/Component/Intl/Data/Bundle/Writer/BundleWriterInterface.php
---- a/src/Symfony/Component/Intl/Data/Bundle/Writer/BundleWriterInterface.php
-+++ b/src/Symfony/Component/Intl/Data/Bundle/Writer/BundleWriterInterface.php
-@@ -24,4 +24,4 @@ interface BundleWriterInterface
-      * @return void
-      */
--    public function write(string $path, string $locale, mixed $data);
-+    public function write(string $path, string $locale, mixed $data): void;
- }
 diff --git a/src/Symfony/Component/Intl/Transliterator/EmojiTransliterator.php b/src/Symfony/Component/Intl/Transliterator/EmojiTransliterator.php
 --- a/src/Symfony/Component/Intl/Transliterator/EmojiTransliterator.php
 +++ b/src/Symfony/Component/Intl/Transliterator/EmojiTransliterator.php
@@ -9465,28 +9447,28 @@ diff --git a/src/Symfony/Component/Lock/Store/MemcachedStore.php b/src/Symfony/C
 diff --git a/src/Symfony/Component/Lock/Store/MongoDbStore.php b/src/Symfony/Component/Lock/Store/MongoDbStore.php
 --- a/src/Symfony/Component/Lock/Store/MongoDbStore.php
 +++ b/src/Symfony/Component/Lock/Store/MongoDbStore.php
-@@ -209,5 +209,5 @@ class MongoDbStore implements PersistingStoreInterface
+@@ -213,5 +213,5 @@ class MongoDbStore implements PersistingStoreInterface
       * @throws DriverRuntimeException        for other driver errors (e.g. connection errors)
       */
 -    public function createTtlIndex(int $expireAfterSeconds = 0)
 +    public function createTtlIndex(int $expireAfterSeconds = 0): void
      {
          $server = $this->getManager()->selectServer();
-@@ -231,5 +231,5 @@ class MongoDbStore implements PersistingStoreInterface
+@@ -235,5 +235,5 @@ class MongoDbStore implements PersistingStoreInterface
       * @throws LockExpiredException when save is called on an expired lock
       */
 -    public function save(Key $key)
 +    public function save(Key $key): void
      {
          $key->reduceLifetime($this->initialTtl);
-@@ -257,5 +257,5 @@ class MongoDbStore implements PersistingStoreInterface
+@@ -261,5 +261,5 @@ class MongoDbStore implements PersistingStoreInterface
       * @throws LockExpiredException
       */
 -    public function putOffExpiration(Key $key, float $ttl)
 +    public function putOffExpiration(Key $key, float $ttl): void
      {
          $key->reduceLifetime($ttl);
-@@ -276,5 +276,5 @@ class MongoDbStore implements PersistingStoreInterface
+@@ -280,5 +280,5 @@ class MongoDbStore implements PersistingStoreInterface
       * @return void
       */
 -    public function delete(Key $key)
