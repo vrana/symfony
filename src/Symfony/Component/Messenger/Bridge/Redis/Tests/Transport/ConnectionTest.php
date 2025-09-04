@@ -403,10 +403,19 @@ class ConnectionTest extends TestCase
         yield '100ms delay' => ['/^\w+\.\d+$/', 100, 'rawCommand', '1'];
     }
 
+    /**
+     * @group integration
+     */
     public function testInvalidSentinelMasterName()
     {
+        if (!$hosts = getenv('REDIS_SENTINEL_HOSTS')) {
+            $this->markTestSkipped('REDIS_SENTINEL_HOSTS env var is not defined.');
+        }
+
+        $dsn = 'redis:?host['.str_replace(' ', ']&host[', $hosts).']';
+
         try {
-            Connection::fromDsn(getenv('MESSENGER_REDIS_DSN'), ['delete_after_ack' => true], null);
+            Connection::fromDsn($dsn, ['delete_after_ack' => true]);
         } catch (\Exception $e) {
             self::markTestSkipped($e->getMessage());
         }
@@ -415,14 +424,12 @@ class ConnectionTest extends TestCase
             self::markTestSkipped('Redis sentinel is not configured');
         }
 
-        $master = getenv('MESSENGER_REDIS_DSN');
         $uid = uniqid('sentinel_', true);
 
-        $exp = explode('://', $master, 2)[1];
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(\sprintf('Failed to retrieve master information from master name "%s" and address "%s".', $uid, $exp));
+        $this->expectExceptionMessage(\sprintf('Failed to retrieve master information from sentinel "%s".', $uid));
 
-        Connection::fromDsn(\sprintf('%s/messenger-clearlasterror', $master), ['delete_after_ack' => true, 'sentinel_master' => $uid], null);
+        Connection::fromDsn(\sprintf('%s/messenger-clearlasterror', $dsn), ['delete_after_ack' => true, 'sentinel_master' => $uid]);
     }
 
     public function testFromDsnOnUnixSocketWithUserAndPassword()
