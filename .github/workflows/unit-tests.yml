@@ -256,5 +256,5 @@ jobs:
         run: |
           ./phpunit src/Symfony/Bridge/PhpUnit
         env:
-          SYMFONY_PHPUNIT_VERSION: '11.3'
+          SYMFONY_PHPUNIT_VERSION: '11.5'
           SYMFONY_DEPRECATIONS_HELPER: 'disabled'
