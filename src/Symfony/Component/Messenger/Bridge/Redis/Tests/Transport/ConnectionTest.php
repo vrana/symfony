@@ -12,6 +12,7 @@
 namespace Symfony\Component\Messenger\Bridge\Redis\Tests\Transport;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -400,9 +401,7 @@ class ConnectionTest extends TestCase
         yield '100ms delay' => ['/^[A-Z\d\/+]+$/i', 100, 'rawCommand', '1'];
     }
 
-    /**
-     * @group integration
-     */
+    #[Group('integration')]
     public function testInvalidSentinelMasterName()
     {
         if (!$hosts = getenv('REDIS_SENTINEL_HOSTS')) {
