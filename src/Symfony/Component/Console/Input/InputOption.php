@@ -55,6 +55,9 @@ class InputOption
     private int $mode;
     private string|int|bool|array|float|null $default;
 
+    /** @var ?non-empty-list<string> */
+    private ?array $allowedValues = null;
+
     /**
      * @param string|array|null                                                             $shortcut        The shortcuts, can be null, a string of shortcuts delimited by | or an array of shortcuts
      * @param int-mask-of<InputOption::*>|null                                              $mode            The option mode: One of the VALUE_* constants
@@ -218,7 +221,7 @@ class InputOption
      */
     public function getDescription(): string
     {
-        return $this->description;
+        return $this->description.(null !== $this->allowedValues ? \sprintf(' ("%s")', implode('", "', $this->allowedValues)) : '');
     }
 
     /**
@@ -227,6 +230,27 @@ class InputOption
     public function hasCompletion(): bool
     {
         return [] !== $this->suggestedValues;
+    }
+
+    /**
+     * @param non-empty-list<string> $allowedValues
+     *
+     * @return $this
+     */
+    public function setAllowedValues(array $allowedValues): static
+    {
+        $this->allowedValues = $allowedValues;
+        $this->suggestedValues = $allowedValues;
+
+        return $this;
+    }
+
+    /**
+     * @return ?non-empty-list<string>
+     */
+    public function getAllowedValues(): ?array
+    {
+        return $this->allowedValues;
     }
 
     /**
@@ -257,6 +281,7 @@ class InputOption
             && $option->isArray() === $this->isArray()
             && $option->isValueRequired() === $this->isValueRequired()
             && $option->isValueOptional() === $this->isValueOptional()
+            && $option->getAllowedValues() === $this->getAllowedValues()
         ;
     }
 }

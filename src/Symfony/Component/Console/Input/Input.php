@@ -12,6 +12,7 @@
 namespace Symfony\Component\Console\Input;
 
 use Symfony\Component\Console\Exception\InvalidArgumentException;
+use Symfony\Component\Console\Exception\InvalidOptionException;
 use Symfony\Component\Console\Exception\RuntimeException;
 
 /**
@@ -138,6 +139,12 @@ abstract class Input implements InputInterface, StreamableInputInterface
             return;
         } elseif (!$this->definition->hasOption($name)) {
             throw new InvalidArgumentException(\sprintf('The "%s" option does not exist.', $name));
+        }
+
+        $option = $this->definition->getOption($name);
+        $allowedValues = $option->getAllowedValues();
+        if (null !== $allowedValues && !\in_array($value, $allowedValues, true)) {
+            throw InvalidOptionException::fromEnumValue($name, $value, $allowedValues);
         }
 
         $this->options[$name] = $value;

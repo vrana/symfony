@@ -265,7 +265,7 @@ class ArgvInput extends Input
         if ($option->isArray()) {
             $this->options[$name][] = $value;
         } else {
-            $this->options[$name] = $value;
+            $this->setOption($name, $value);
         }
     }
 

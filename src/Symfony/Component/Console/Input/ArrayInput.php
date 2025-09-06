@@ -145,7 +145,7 @@ class ArrayInput extends Input
      * Adds a long option value.
      *
      * @throws InvalidOptionException When option given doesn't exist
-     * @throws InvalidOptionException When a required value is missing
+     * @throws InvalidOptionException When a required value is missing or invalid
      */
     private function addLongOption(string $name, mixed $value): void
     {
@@ -172,7 +172,7 @@ class ArrayInput extends Input
             }
         }
 
-        $this->options[$name] = $value;
+        $this->setOption($name, $value);
     }
 
     /**

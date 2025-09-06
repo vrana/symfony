@@ -120,6 +120,23 @@ class CommandTest extends TestCase
         $this->assertTrue($option->hasCompletion());
     }
 
+    public function testAddOptionWithValue()
+    {
+        $command = new \TestCommand();
+        $ret = $command->addOptionWithValue('foo', ['a', 'b'], null, 'Foo');
+        $this->assertEquals($command, $ret, '->addOptionWithValue() implements a fluent interface');
+        $this->assertTrue($command->getDefinition()->hasOption('foo'), '->addOptionWithValue() adds an option to the command');
+        $option = $command->getDefinition()->getOption('foo');
+        $this->assertEquals(['a', 'b'], $option->getAllowedValues(), '->addOptionWithValue() sets allowed values');
+
+        $this->assertEquals('Foo ("a", "b")', $option->getDescription());
+
+        $tester = new CommandTester($command);
+        $this->expectException(InvalidOptionException::class);
+        $this->expectExceptionMessage('The value "invalid" is not valid for the "foo" option. Supported values are "a", "b".');
+        $tester->execute(['--foo' => 'invalid']);
+    }
+
     public function testSetHidden()
     {
         $command = new \TestCommand();

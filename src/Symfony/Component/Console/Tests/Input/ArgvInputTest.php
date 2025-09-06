@@ -13,6 +13,7 @@ namespace Symfony\Component\Console\Tests\Input;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Exception\InvalidOptionException;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -107,6 +108,12 @@ class ArgvInputTest extends TestCase
                 [new InputOption('foo', 'f', InputOption::VALUE_OPTIONAL)],
                 ['foo' => null],
                 '->parse() parses long options with optional value specified with no separator and no value as null',
+            ],
+            [
+                ['cli.php', '--foo=a'],
+                [(new InputOption('foo', 'f', InputOption::VALUE_REQUIRED))->setAllowedValues(['a', 'b'])],
+                ['foo' => 'a'],
+                '->parse() parses long options with allowed values',
             ],
             [
                 ['cli.php', '-f'],
@@ -232,9 +239,9 @@ class ArgvInputTest extends TestCase
     }
 
     #[DataProvider('provideInvalidInput')]
-    public function testInvalidInput($argv, $definition, $expectedExceptionMessage)
+    public function testInvalidInput($argv, $definition, $expectedExceptionMessage, $exceptionClass = \RuntimeException::class)
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException($exceptionClass);
         $this->expectExceptionMessage($expectedExceptionMessage);
 
         (new ArgvInput($argv))->bind($definition);
@@ -271,6 +278,12 @@ class ArgvInputTest extends TestCase
                 ['cli.php', '--foo=bar'],
                 new InputDefinition([new InputOption('foo', 'f', InputOption::VALUE_NONE)]),
                 'The "--foo" option does not accept a value.',
+            ],
+            [
+                ['cli.php', '--foo=invalid'],
+                new InputDefinition([(new InputOption('foo', 'f', InputOption::VALUE_REQUIRED))->setAllowedValues(['a', 'b'])]),
+                'The value "invalid" is not valid for the "foo" option. Supported values are "a", "b".',
+                InvalidOptionException::class,
             ],
             [
                 ['cli.php', 'foo', 'bar'],

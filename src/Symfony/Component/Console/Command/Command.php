@@ -480,8 +480,28 @@ class Command implements SignalableCommandInterface
      */
     public function addOption(string $name, string|array|null $shortcut = null, ?int $mode = null, string $description = '', mixed $default = null, array|\Closure $suggestedValues = []): static
     {
-        $this->definition->addOption(new InputOption($name, $shortcut, $mode, $description, $default, $suggestedValues));
-        $this->fullDefinition?->addOption(new InputOption($name, $shortcut, $mode, $description, $default, $suggestedValues));
+        return $this->addOptionDefinition(new InputOption($name, $shortcut, $mode, $description, $default, $suggestedValues));
+    }
+
+    /**
+     * @param non-empty-list<string> $allowedValues
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException If option mode is invalid or incompatible
+     */
+    public function addOptionWithValue(string $name, array $allowedValues, string|array|null $shortcut = null, string $description = '', mixed $default = null): static
+    {
+        $option = new InputOption($name, $shortcut, InputOption::VALUE_REQUIRED, $description, $default);
+        $option->setAllowedValues($allowedValues);
+
+        return $this->addOptionDefinition($option);
+    }
+
+    private function addOptionDefinition(InputOption $inputOption): static
+    {
+        $this->definition->addOption($inputOption);
+        $this->fullDefinition?->addOption($inputOption);
 
         return $this;
     }
